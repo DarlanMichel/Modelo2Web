@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titulo">Edição de Proprietario</ui:define>
+        <ui:define name="conteudo">
+            <h:form>
+                <p:growl/>
+                <p:panelGrid columns="2">
+                    <f:facet name="header">
+                        <p:outputLabel value="Edição do Proprietario"/>
+                    </f:facet>
+                    <f:facet name="footer">
+                        <div align="center">
+                            <p:commandButton value="Cancelar"
+                                             ajax="false" immediate="true"
+                                             action="#{controleProprietario.cancelar()}"/>
+                            <p:commandButton value="Salvar" icon="ui-icon-disk"
+                                             ajax="false"
+                                             action="#{controleProprietario.salvar()}"/>                                             
+                        </div>
+                    </f:facet>
+                    <p:outputLabel value="ID"/>
+                    <p:inputText value="#{controleProprietario.objeto.id}" readonly="true"
+                                 size="5"/>
+                    <p:outputLabel value="Nome" for="txtNome"/>
+                    <p:inputText id="txtNome" value="#{controleProprietario.objeto.nome}"
+                                 size="50" maxlength="50"
+                                 placeholder="Obrigatório"/>
+                    <p:outputLabel value="CPF" for="txtCPF"/>
+                    <p:inputText id="txtCPF" value="#{controleProprietario.objeto.cpf}"
+                                 size="11" maxlength="11"
+                                 placeholder="Obrigatório"/>
+                    <p:outputLabel value="Telefone" for="txtTelefone"/>
+                    <p:inputText id="txtTelefone" value="#{controleProprietario.objeto.telefone}"
+                                 size="11" maxlength="11"/>
+                    <p:outputLabel value="Email" for="txtEmail"/>
+                    <p:inputText id="txtEmail" value="#{controleProprietario.objeto.email}"
+                                 size="30" maxlength="30"/>
+                                     
+                    
+                </p:panelGrid>
+            </h:form>                                
+        </ui:define>
+    </ui:composition>
+</html>
+

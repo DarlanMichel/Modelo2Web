@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titulo">CRUD de Proprietario</ui:define>
+        <ui:define name="conteudo">
+            <h:form prependId="false">
+                <p:growl/>
+                <p:messages/>
+                <p:commandButton value="Novo"
+                                 action="#{controleProprietario.novo()}"
+                                 ajax="false"
+                                 icon="ui-icon-plus"/>
+                <div align="center"> 
+                    <p:defaultCommand target="filtrar"/>
+                    <p:panelGrid columns="11">
+                        <p:outputLabel value="Ordem: "/>
+                        <p:selectOneMenu id="ordem" value="#{controleProprietario.dao.ordem}">
+                            <f:selectItem itemLabel="ID" itemValue="id"/>
+                            <f:selectItem itemLabel="Nome" itemValue="nome"/>
+                            <f:selectItem itemLabel="CPF" itemValue="cpf"/>
+                            <f:selectItem itemLabel="Telefone" itemValue="telefone"/>
+                            <f:selectItem itemLabel="Email" itemValue="email"/>
+                            <p:ajax update="listagem" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Filtro: "/>                        
+                        <p:inputText value="#{controleProprietario.dao.filtro}">
+                            <p:ajax update="listagem" event="blur"/>
+                        </p:inputText>                       
+                        <p:commandButton value="Filtrar" update="listagem" id="filtrar"
+                                         icon="ui-icon-search"/>
+                        <p:outputLabel value="Máximo de objetos:"/>
+                        <p:inputNumber value="#{controleProprietario.dao.maximoObjetos}"
+                                       size="3"
+                                       thousandSeparator="" decimalSeparator=""
+                                       decimalPlaces="0">
+                            <p:ajax event="keyup" update="listagem"/>
+                        </p:inputNumber>
+                        <p:commandButton actionListener="#{controleProprietario.dao.primeiro()}"
+                                         icon="ui-icon-seek-first" title="Primeiro"
+                                         update="listagem"/>
+                        <p:commandButton actionListener="#{controleProprietario.dao.anterior()}"
+                                         icon="ui-icon-seek-prev" title="Anterior"
+                                         update="listagem"/>
+                        <p:commandButton actionListener="#{controleProprietario.dao.proximo()}"
+                                         icon="ui-icon-seek-next" title="Próximo"
+                                         update="listagem"/>                        
+                        <p:commandButton actionListener="#{controleProprietario.dao.ultimo()}"
+                                         icon="ui-icon-seek-end" title="Ultimo"
+                                         update="listagem"/>                        
+                    </p:panelGrid>                        
+                </div>
+                <p:dataTable value="#{controleProprietario.dao.listaObjetos}" var="obj" id="listagem">
+                    <f:facet name="footer">
+                        <p:outputLabel value="#{controleProprietario.dao.mensagemNavegacao}"/>
+                    </f:facet>
+                    <p:column headerText="ID">
+                        <p:outputLabel value="#{obj.id}"/>
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <p:outputLabel value="#{obj.nome}"/>
+                    </p:column>      
+                    <p:column headerText="CPF">
+                        <p:outputLabel value="#{obj.cpf}"/>
+                    </p:column>                    
+                    <p:column headerText="Telefone">
+                        <p:outputLabel value="#{obj.telefone}"/>
+                    </p:column> 
+                    <p:column headerText="Email">
+                        <p:outputLabel value="#{obj.email}"/>
+                    </p:column> 
+                    <p:column headerText="Ações">
+                        <div align="center">
+                            <p:commandButton
+                                action="#{controleProprietario.editar(obj.id)}"
+                                icon="ui-icon-pencil" ajax="false"
+                                title="Editar"/>
+                            <p:commandButton
+                                action="#{controleProprietario.remover(obj.id)}"
+                                icon="ui-icon-trash" ajax="false"
+                                title="Remover"
+                                onclick="if(!confirm('Confirma a exclusão')) return false"/>
+                        </div>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+
